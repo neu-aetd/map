@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>地图 - 屏幕坐标转换</title>
+  <style type="text/css">
+    html,body{margin:0px;height:100%;width:100%}
+    .container{width:100%;height:100%}
+    /* 坐标信息容器 */
+    #coordinate {
+      position: fixed;
+      left: 0; /* 左边对齐 */
+      top: 0; /* 底部对齐 */
+      width: 30%; /* 占满宽度 */
+      height: 110px; /* 高度保持不变 */
+      overflow: hidden; /* 超出部分隐藏 */
+      z-index: 1000; /* 确保覆盖在地图上方 */
+    }
+    /* 坐标信息样式 */
+    #coordinate div {
+      background-color: rgba(22, 22, 22, 0.5); /* 半透明背景 */
+      width: 100%; /* 占满宽度 */
+      height: 100%; /* 占满高度 */
+      padding: 10px; /* 内边距 */
+      font: 20px bold sans-serif; /* 字体样式 */
+      color: #fff; /* 字体颜色 */
+      overflow-x: hidden; /* 添加水平滚动条 */
+      overflow-y: auto; /* 添加垂直滚动条 */
+    }
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/maptalks/dist/maptalks.css">
+  <script type="text/javascript" src="https://unpkg.com/maptalks/dist/maptalks.min.js"></script>
+  <body>
+
+    <div id="map" class="container"></div>
+    <div id="coordinate"></div>
+
+    <script>
+
+      var map = new maptalks.Map('map', {
+        center: [116.40396,39.91407],
+        zoom: 14,                    // 设置初始缩放级别
+        minZoom: 4,                  // 设置最小缩放级别
+        maxZoom: 19,                 // 设置最大缩放级别
+        seamlessZoom: true,          // 启用无缝缩放（平滑缩放）
+        pitch : 0,                   // 设置倾斜角度
+        centerCross: true,           // 在地图中心显示十字交叉线
+        scaleControl: true,          // 添加比例尺控件
+        overviewControl: true,       // 添加概览（小地图）控件
+        attribution: true,           // 显示地图版权信息
+        dragPitch : true,            // 拖拽地图时可以改变倾斜角度
+        dragRotate : true,           // 拖拽地图时可以改变旋转角
+        dragRotatePitch : true,      // 拖拽地图时可以同时改变旋转角和倾斜角
+
+        // // 设置地图的投影和坐标系
+        // baseLayer: new maptalks.TileLayer('base', {
+        //   urlTemplate: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+        //   subdomains: ['a','b','c','d'],
+        //   attribution: '&copy; <a href="http://osm.org">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/">CARTO</a>'
+        // })
+
+        // 设置百度地图的投影和坐标系
+        spatialReference:{
+          projection : 'baidu'
+        },
+        baseLayer: new maptalks.TileLayer('base', {
+          'urlTemplate' : 'https://gss{s}.bdstatic.com/8bo_dTSlRsgBo1vgoIiO_jowehsv/tile/?qt=tile&x={x}&y={y}&z={z}&styles=pl&scaler=1&udt=20170927',
+          'subdomains':[0, 1, 2, 3],
+          'attribution' :  '&copy; <a target="_blank" href="http://map.baidu.com">Baidu</a>'
+        })
+
+      });
+      
+      // 监听地图的移动、缩放和倾斜事件
+      map.on('moving moveend zoomend', update);
+
+      update();
+
+      // 更新坐标信息
+      function update() {
+        var projection = map.getProjection();
+        var center = map.getCenter(),
+          prj = projection.project(center),
+          containerPoint = map.coordinateToContainerPoint(center).round();
+
+        document.getElementById('coordinate').innerHTML = '<div>' + [
+          'Center : [' + center.y.toFixed(5) + ', ' + center.x.toFixed(5) + ']',
+          'Projected Coordinate : [' + prj.y.toFixed(5) + ', ' + prj.x.toFixed(5) + ']',
+          'ContainerPoint : [' + containerPoint.y + ', ' + containerPoint.x + ']'
+        ].join('<br>') + '</div>';
+      }
+ 
+      // 创建指南针控件
+      const customPositionCompass = new maptalks.control.Compass({
+        position: { 
+          'bottom': '40%',
+          'right': '1%'
+        },
+      });
+      map.addControl(customPositionCompass);
+
+      // 创建自定义位置的缩放控件
+      var customPosition = new maptalks.control.Zoom({
+        'position': {
+          'bottom': '25%',
+          'right': '1%'
+        },
+        'zoomLevel': true, // 显示缩放级别
+      });
+      map.addControl(customPosition);
+
+    </script>
+  </body>
+</html>
