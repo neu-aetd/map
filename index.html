@@ -52,11 +52,12 @@
         dragRotate : true,            // 拖拽地图时可以改变旋转角
         dragRotatePitch : true,       // 拖拽地图时可以同时改变旋转角和倾斜角
 
-        // 设置地图的投影和坐标系
+        // 设置OpenStreetMap地图的投影和坐标系
         baseLayer: new maptalks.TileLayer('base', {
           urlTemplate: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
           subdomains: ['a','b','c','d'],
-          attribution: '&copy; <a href="http://osm.org">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/">CARTO</a>'
+          attribution: '&copy; <a href="http://osm.org">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/">CARTO</a>',
+          cssFilter : 'grayscale(5%)' // 设置CSS滤镜效果
         })
 
         // // 设置百度地图的投影和坐标系
@@ -68,9 +69,8 @@
         //   'subdomains':[0, 1, 2, 3],
         //   'attribution' :  '&copy; <a target="_blank" href="http://map.baidu.com">Baidu</a>'
         // })
-
       });
-      
+
       // 监听地图的移动、缩放和倾斜事件
       map.on('moving moveend zoomend', update);
 
