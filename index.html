@@ -52,22 +52,22 @@
         dragRotate : true,           // 拖拽地图时可以改变旋转角
         dragRotatePitch : true,      // 拖拽地图时可以同时改变旋转角和倾斜角
 
-        // // 设置地图的投影和坐标系
-        // baseLayer: new maptalks.TileLayer('base', {
-        //   urlTemplate: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-        //   subdomains: ['a','b','c','d'],
-        //   attribution: '&copy; <a href="http://osm.org">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/">CARTO</a>'
-        // })
-
-        // 设置百度地图的投影和坐标系
-        spatialReference:{
-          projection : 'baidu'
-        },
+        // 设置地图的投影和坐标系
         baseLayer: new maptalks.TileLayer('base', {
-          'urlTemplate' : 'https://gss{s}.bdstatic.com/8bo_dTSlRsgBo1vgoIiO_jowehsv/tile/?qt=tile&x={x}&y={y}&z={z}&styles=pl&scaler=1&udt=20170927',
-          'subdomains':[0, 1, 2, 3],
-          'attribution' :  '&copy; <a target="_blank" href="http://map.baidu.com">Baidu</a>'
+          urlTemplate: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+          subdomains: ['a','b','c','d'],
+          attribution: '&copy; <a href="http://osm.org">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/">CARTO</a>'
         })
+
+        // // 设置百度地图的投影和坐标系
+        // spatialReference:{
+        //   projection : 'baidu'
+        // },
+        // baseLayer: new maptalks.TileLayer('base', {
+        //   'urlTemplate' : 'https://gss{s}.bdstatic.com/8bo_dTSlRsgBo1vgoIiO_jowehsv/tile/?qt=tile&x={x}&y={y}&z={z}&styles=pl&scaler=1&udt=20170927',
+        //   'subdomains':[0, 1, 2, 3],
+        //   'attribution' :  '&copy; <a target="_blank" href="http://map.baidu.com">Baidu</a>'
+        // })
 
       });
       
