@@ -84,7 +84,8 @@
           containerPoint = map.coordinateToContainerPoint(center).round();
 
         document.getElementById('coordinate').innerHTML = '<div>' + [
-          'Center : [' + center.y.toFixed(5) + ',' + center.x.toFixed(5) + ']',
+          'Center : [' + center.y.toFixed(5) + ',' + center.x.toFixed(5) + ',100' + '] \
+            <span style="font-size:12px;">#高度[100]为固定值，不是真实高度</span>',
           'Projected Coordinate : [' + prj.y.toFixed(5) + ',' + prj.x.toFixed(5) + ']',
           'ContainerPoint : [' + containerPoint.y + ',' + containerPoint.x + ']'
         ].join('<br>') + '</div>';
